@@ -1,6 +1,10 @@
 package com.riobranco.mouseomanos.produto_api.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "produto")
@@ -10,9 +14,19 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "A categoria é obrigatória")
+    @Size(max = 100, message = "A categoria deve ter no máximo 100 caracteres")
     private String categoria;
+
+    @NotBlank(message = "O nome é obrigatório")
+    @Size(max = 150, message = "O nome deve ter no máximo 150 caracteres")
     private String nome;
+
+    @Size(max = 500, message = "A descrição deve ter no máximo 500 caracteres")
     private String descricao;
+
+    @NotNull(message = "O valor é obrigatório")
+    @Positive(message = "O valor deve ser maior que zero")
     private Double valor;
 
     public Produto() {
