@@ -2,6 +2,7 @@ HELP.md
 target/
 .maven-cache/
 .runtime-tmp/
+data/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

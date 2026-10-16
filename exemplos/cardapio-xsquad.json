@@ -1,0 +1,8 @@
+[
+  {"nome":"X-Clássico","categoria":"Hambúrgueres","descricao":"Pão brioche, hambúrguer de 160 g, queijo, alface, tomate e molho da casa.","valor":24.90,"disponivel":true},
+  {"nome":"X-Bacon","categoria":"Hambúrgueres","descricao":"Pão brioche, hambúrguer de 160 g, cheddar cremoso, bacon crocante e maionese da casa.","valor":29.90,"disponivel":true},
+  {"nome":"X-Duplo Squad","categoria":"Hambúrgueres","descricao":"Dois hambúrgueres de 160 g, cheddar em dobro, cebola caramelizada e molho especial.","valor":38.90,"disponivel":true},
+  {"nome":"Combo X-Squad","categoria":"Combos","descricao":"X-Clássico, batata frita individual e refrigerante em lata para completar o squad.","valor":39.90,"disponivel":true},
+  {"nome":"Batata Squad","categoria":"Acompanhamentos","descricao":"Porção de batatas fritas douradas, crocantes por fora e macias por dentro.","valor":14.90,"disponivel":true},
+  {"nome":"Refrigerante em lata","categoria":"Bebidas","descricao":"Lata de 350 ml bem gelada. Consulte os sabores disponíveis.","valor":6.90,"disponivel":true}
+]

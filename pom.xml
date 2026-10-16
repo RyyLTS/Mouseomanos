@@ -11,8 +11,8 @@
 	<groupId>com.riobranco.mouseomanos</groupId>
 	<artifactId>produto-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+	<name>X-Squad Hamburgueria</name>
+	<description>Cardápio, cadastro de produtos e pedidos da hamburgueria X-Squad</description>
 	<url/>
 	<licenses>
 		<license/>

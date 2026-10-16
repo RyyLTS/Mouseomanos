@@ -1,6 +1,7 @@
 package com.riobranco.mouseomanos.produto_api.entity;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "produto")
@@ -13,12 +14,15 @@ public class Produto {
     private String categoria;
     private String nome;
     private String descricao;
-    private Double valor;
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal valor;
+    @Column(nullable = false)
+    private boolean disponivel = true;
 
     public Produto() {
     }
 
-    public Produto(Long id, String categoria, String nome, String descricao, Double valor) {
+    public Produto(Long id, String categoria, String nome, String descricao, BigDecimal valor) {
         this.id = id;
         this.categoria = categoria;
         this.nome = nome;
@@ -58,11 +62,14 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public Double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
+
+    public boolean isDisponivel() { return disponivel; }
+    public void setDisponivel(boolean disponivel) { this.disponivel = disponivel; }
 }
