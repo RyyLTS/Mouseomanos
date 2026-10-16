@@ -2,53 +2,90 @@ package com.riobranco.mouseomanos.produto_api.controller;
 
 import com.riobranco.mouseomanos.produto_api.entity.Produto;
 import com.riobranco.mouseomanos.produto_api.repository.ProdutoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.server.ResponseStatusException;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
+    private final ProdutoRepository repository;
+    public ProdutoController(ProdutoRepository repository) { this.repository = repository; }
 
-    @Autowired
-    private ProdutoRepository produtoRepository;
-
-    // 1. CREATE - Cadastrar um novo produto (POST)
     @PostMapping
     public Produto criar(@RequestBody Produto produto) {
-        return produtoRepository.save(produto);
+        validar(produto);
+        produto.setId(null);
+        return repository.save(produto);
     }
 
-    // 2. READ - Listar todos os produtos (GET)
     @GetMapping
-    public List<Produto> listar() {
-        return produtoRepository.findAll();
-    }
+    public List<Produto> listar() { return repository.findAll(); }
 
-    // 2.1. READ por ID - Buscar um produto específico (GET)
     @GetMapping("/{id}")
-    public Optional<Produto> buscarPorId(@PathVariable Long id) {
-        return produtoRepository.findById(id);
-    }
+    public Produto buscarPorId(@PathVariable Long id) { return repository.findById(id).orElseThrow(this::naoEncontrado); }
 
-    // 3. UPDATE - Atualizar um produto existente (PUT)
     @PutMapping("/{id}")
-    public Produto atualizar(@PathVariable Long id, @RequestBody Produto produtoDetalhes) {
-        Produto produto = produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado com o id: " + id));
-
-        produto.setNome(produtoDetalhes.getNome());
-        produto.setCategoria(produtoDetalhes.getCategoria());
-        produto.setDescricao(produtoDetalhes.getDescricao());
-        produto.setValor(produtoDetalhes.getValor());
-
-        return produtoRepository.save(produto);
+    @Transactional
+    public Produto atualizar(@PathVariable Long id, @RequestBody Produto dados) {
+        validar(dados);
+        Produto produto = repository.buscarParaAlteracao(id).orElseThrow(this::naoEncontrado);
+        produto.setNome(dados.getNome());
+        produto.setCategoria(dados.getCategoria());
+        produto.setDescricao(dados.getDescricao());
+        produto.setValor(dados.getValor());
+        produto.setDisponivel(dados.isDisponivel());
+        return repository.save(produto);
     }
 
-    // 4. DELETE - Excluir um produto (DELETE)
+    public record Preco(BigDecimal valor) { }
+
+    @PatchMapping("/{id}/preco")
+    @Transactional
+    public Produto alterarPreco(@PathVariable Long id, @RequestBody Preco dados) {
+        validarValor(dados.valor());
+        Produto produto = repository.buscarParaAlteracao(id).orElseThrow(this::naoEncontrado);
+        produto.setValor(dados.valor());
+        return repository.save(produto);
+    }
+
+    public record Disponibilidade(Boolean disponivel) { }
+
+    @PatchMapping("/{id}/disponibilidade")
+    @Transactional
+    public Produto alterarDisponibilidade(@PathVariable Long id, @RequestBody Disponibilidade dados) {
+        if (dados.disponivel() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Informe a disponibilidade do item.");
+        Produto produto = repository.buscarParaAlteracao(id).orElseThrow(this::naoEncontrado);
+        produto.setDisponivel(dados.disponivel());
+        return repository.save(produto);
+    }
+
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id) {
-        produtoRepository.deleteById(id);
+    @Transactional
+    public void deletar(@PathVariable Long id) { repository.delete(repository.buscarParaAlteracao(id).orElseThrow(this::naoEncontrado)); }
+
+    private ResponseStatusException naoEncontrado() { return new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado."); }
+
+    private void validar(Produto produto) {
+        produto.setNome(texto(produto.getNome(), "nome"));
+        produto.setCategoria(texto(produto.getCategoria(), "categoria"));
+        produto.setDescricao(texto(produto.getDescricao(), "descrição"));
+        validarValor(produto.getValor());
+    }
+
+    private String texto(String valor, String campo) {
+        if (valor == null || valor.isBlank() || valor.trim().length() > 255) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Preencha " + campo + " com até 255 caracteres.");
+        }
+        return valor.trim();
+    }
+
+    private void validarValor(BigDecimal valor) {
+        if (valor == null || valor.signum() < 0 || valor.stripTrailingZeros().scale() > 2 || valor.precision() - valor.scale() > 10) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Informe um preço válido, não negativo e com até duas casas decimais.");
+        }
     }
 }
