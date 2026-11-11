@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main" android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="16dp">
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="MOUSSEOMANOS" android:textStyle="bold" android:textSize="26sp" />
+    <Button android:id="@+id/configurar" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Conectar à API" />
+    <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:accessibilityLiveRegion="polite" android:padding="8dp" />
+    <ProgressBar android:id="@+id/progresso" style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent" android:layout_height="4dp" android:indeterminate="true" />
+    <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+            <Button android:id="@+id/cardapio" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cardápio" />
+            <Button android:id="@+id/gerenciar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gerenciar" />
+            <Button android:id="@+id/carrinho" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Carrinho" />
+            <Button android:id="@+id/pedidos" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pedidos" />
+        </LinearLayout>
+    </HorizontalScrollView>
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+            <EditText android:id="@+id/busca" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Buscar nome, categoria ou descrição" android:inputType="text" />
+            <LinearLayout android:id="@+id/formulario" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:id="@+id/tituloFormulario" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Novo produto" android:textSize="22sp" />
+                <EditText android:id="@+id/nome" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Nome" android:inputType="textCapSentences" android:maxLength="255" />
+                <EditText android:id="@+id/categoria" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Categoria" android:inputType="textCapSentences" android:maxLength="255" />
+                <EditText android:id="@+id/descricao" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Descrição" android:inputType="textMultiLine" android:maxLength="255" />
+                <EditText android:id="@+id/valor" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Valor (R$)" android:inputType="numberDecimal" />
+                <CheckBox android:id="@+id/disponivel" android:layout_width="match_parent" android:layout_height="48dp" android:text="Disponível no cardápio" android:checked="true" />
+                <Button android:id="@+id/salvar" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Cadastrar" />
+                <Button android:id="@+id/limpar" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Limpar formulário" />
+            </LinearLayout>
+            <Button android:id="@+id/atualizar" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Atualizar" />
+            <LinearLayout android:id="@+id/itens" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" />
+            <LinearLayout android:id="@+id/checkout" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:id="@+id/total" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="22sp" />
+                <EditText android:id="@+id/cliente" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Seu nome ou mesa" android:inputType="textPersonName" android:maxLength="100" />
+                <EditText android:id="@+id/observacao" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="48dp" android:hint="Observações do pedido" android:inputType="textMultiLine" android:maxLength="500" />
+                <Button android:id="@+id/confirmar" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Confirmar pedido" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
