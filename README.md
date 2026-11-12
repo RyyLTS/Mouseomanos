@@ -1,5 +1,8 @@
 # X-Squad — Hamburgueria
 
+O app Android nativo Mousseomanos (Java + Views, MVVM, Aula 10) está em [`android/`](android/README.md).
+Abra essa pasta no Android Studio. O projeto Maven abaixo continua sendo a API e a interface web.
+
 Sistema da hamburgueria **X-Squad**, com cadastro de hambúrgueres, combos, acompanhamentos e bebidas, cardápio e pedidos. Usa Spring Boot 4.1.1, Java 17, Spring Data JPA e H2. A interface é servida pela própria aplicação; não precisa de Node.js, MySQL ou frontend separado para executar.
 
 O site tem tema escuro e vermelho, fotografias de hambúrgueres, vitrine com setas e miniaturas, filtros por categoria e carrinho em painel lateral. O cadastro está em **Gerenciar cardápio**, junto à busca e no rodapé. Veja [design, arquivos de imagem e prompts](docs/design-e-imagens.md).
