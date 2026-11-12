@@ -102,7 +102,7 @@ Para repetir os testes de tela com emulador ou aparelho conectado:
 
 Os testes de tela usam uma API HTTP simulada dentro do emulador; não gravam dados no Azure.
 Verificam cadastro, atualização da lista, validação, preservação do formulário após erro e
-recriação da Activity sem repetir a consulta. Para investigar falhas reais, abra o Logcat no
+recriação e rotação da Activity sem repetir a consulta. Para investigar falhas reais, abra o Logcat no
 Android Studio, selecione o processo `com.riobranco.mousseomanos` e filtre por `level:ERROR`.
 
 ## Demonstração para a Aula 11

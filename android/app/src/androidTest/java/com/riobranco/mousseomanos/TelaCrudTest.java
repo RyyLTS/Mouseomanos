@@ -69,6 +69,18 @@ public class TelaCrudTest {
         tela.onActivity(a -> assertEquals("", ((EditText) a.findViewById(R.id.nome)).getText().toString()));
         tela.recreate(); esperarMensagem("Cadastrado! 1 produto(s)");
         assertEquals(2, listagens.get());
+        tela.onActivity(a -> a.setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
+        AtomicBoolean paisagem = new AtomicBoolean();
+        long limite = System.currentTimeMillis() + 10000;
+        while (System.currentTimeMillis() < limite) {
+            tela.onActivity(a -> paisagem.set(a.getResources().getConfiguration().orientation
+                    == android.content.res.Configuration.ORIENTATION_LANDSCAPE));
+            if (paisagem.get()) break;
+            Thread.sleep(50);
+        }
+        assertTrue("A Activity deve girar para paisagem", paisagem.get());
+        esperarMensagem("Cadastrado! 1 produto(s)");
+        assertEquals("Girar não deve repetir o GET", 2, listagens.get());
     }
     @Test public void erroPreservaCamposEValidacaoNaoChamaApi() throws Exception {
         preencher();

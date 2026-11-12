@@ -1,6 +1,7 @@
 package com.riobranco.mousseomanos;
 
 import android.os.Bundle;
+import android.content.res.Configuration;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.lifecycle.ViewModelProvider;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -29,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        boolean escuro = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                == Configuration.UI_MODE_NIGHT_YES;
+        WindowInsetsControllerCompat barras = new WindowInsetsControllerCompat(getWindow(), getWindow().getDecorView());
+        barras.setAppearanceLightStatusBars(!escuro);
+        barras.setAppearanceLightNavigationBars(!escuro);
         View raiz = findViewById(R.id.main);
         int padding = raiz.getPaddingLeft();
         ViewCompat.setOnApplyWindowInsetsListener(raiz, (v, insets) -> {

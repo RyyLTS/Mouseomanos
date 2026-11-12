@@ -8,10 +8,14 @@
 - CRUD real no Azure: POST de produto temporário, GET comprovando cadastro, PUT alterando valor,
   GET comprovando edição, DELETE e GET comprovando remoção passaram. O registro temporário foi removido;
   nenhum produto anterior foi alterado. Isso valida o servidor, não substitui a demonstração pelo app.
-- Testes de tela: escritos em `TelaCrudTest`, mas ainda não concluídos. O emulador existente
-  travou e a tentativa de reinicialização foi recusada por falta de espaço livre em disco.
-  Não há evidência de execução desses dois testes nem de inspeção visual no aparelho.
-- A rotação/recriação da Activity precisa ser demonstrada no aparelho da squad.
+- Testes de tela: os dois cenários de `TelaCrudTest` passaram no emulador Android 15/API 35,
+  sem falhas ou testes ignorados. Cadastro atualiza a lista; validação impede envio;
+  erro HTTP preserva os campos; recriação e rotação para paisagem preservam o estado sem repetir GET.
+  A execução via Gradle passou na primeira rodada; após o ajuste de contraste, o runner do Gradle
+  foi interrompido antes de iniciar testes e a validação foi repetida diretamente por instrumentação.
+- Inspeção visual: o app carregou a lista real do Azure e manteve a mensagem ao girar
+  para paisagem. Encontrado e corrigido baixo contraste dos ícones das barras do sistema
+  no tema claro do Android 15. Ainda é recomendada a demonstração no aparelho da squad.
 - A apostila de leitura de apoio mencionada no enunciado não estava disponível.
 
 O back-end existente não foi alterado. A branch do Android não é a `main`, portanto seu push
