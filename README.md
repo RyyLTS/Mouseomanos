@@ -81,6 +81,8 @@ O preço enviado no pedido serve para detectar mudanças desde a visualização 
 
 A API aceita chamadas do navegador apenas das origens listadas em `app.cors.allowed-origins` (`application.properties`). O padrão é `http://localhost:4200,http://127.0.0.1:4200`, usado pelo `ng serve`. Ao publicar o front-end em outro endereço, defina a variável de ambiente `CORS_ALLOWED_ORIGINS` com as origens separadas por vírgula.
 
+A raiz da API (http://127.0.0.1:8080/ ou o endereço do Azure) mostra uma página com o resumo da aplicação, as rotas e exemplos de JSON.
+
 Respostas de erro incluem `message`: HTTP 400 para dados inválidos, 404 para consultas a registros inexistentes e 409 quando um item do pedido foi excluído, ficou indisponível ou teve o preço alterado.
 
 ## Verificação

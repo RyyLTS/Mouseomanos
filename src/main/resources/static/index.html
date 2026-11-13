@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API X-Squad</title>
+  <style>
+    :root { --bg: #ffffff; --fg: #1d1a18; --muted: #6b625c; --line: #e6dfd9; --accent: #c0362f; --code: #f5f1ee; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #14110f; --fg: #f1e9e3; --muted: #a99d94; --line: #2e2824; --accent: #e0574f; --code: #201b18; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    main { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; }
+    h1 { margin: 0 0 4px; font-size: 32px; line-height: 1.2; }
+    h2 { margin: 40px 0 12px; font-size: 20px; }
+    p { margin: 0 0 12px; }
+    .lead { color: var(--muted); }
+    a { color: var(--accent); }
+    code { background: var(--code); padding: 1px 6px; border-radius: 4px; font-size: 14px; overflow-wrap: anywhere; }
+    table { width: 100%; border-collapse: collapse; font-size: 15px; }
+    th, td { text-align: left; padding: 8px 8px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); font-weight: 600; }
+    td:first-child { width: 72px; font-weight: 600; color: var(--accent); font-family: ui-monospace, monospace; font-size: 14px; }
+    td:nth-child(2) { overflow-wrap: anywhere; font-family: ui-monospace, monospace; font-size: 14px; }
+    .table-wrap { overflow-x: auto; }
+    ul { padding-left: 20px; margin: 0; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>API X-Squad</h1>
+  <p class="lead">Back-end do sistema de pedidos da hamburgueria X-Squad (projeto Mouseomanos).</p>
+  <p>API REST em Spring Boot 4 e Java 17 que gerencia o cardápio e os pedidos. Os dados são trocados em JSON e os valores em reais usam até duas casas decimais.</p>
+
+  <h2>Clientes</h2>
+  <ul>
+    <li>Interface web em Angular: <a href="https://github.com/RaulR20/Mousseomanos-front">Mousseomanos-front</a></li>
+    <li>App Android nativo: <a href="https://github.com/RaulR20/Mousseomanos-android">Mousseomanos-android</a></li>
+    <li>Código desta API: <a href="https://github.com/RyyLTS/Mouseomanos">Mouseomanos</a></li>
+  </ul>
+
+  <h2>Rotas</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Método</th><th>Rota</th><th>Descrição</th></tr></thead>
+      <tbody>
+        <tr><td>GET</td><td><a href="produtos">/produtos</a></td><td>Lista todos os itens cadastrados</td></tr>
+        <tr><td>GET</td><td>/produtos/{id}</td><td>Busca um item</td></tr>
+        <tr><td>POST</td><td>/produtos</td><td>Cadastra um item</td></tr>
+        <tr><td>PUT</td><td>/produtos/{id}</td><td>Atualiza um item</td></tr>
+        <tr><td>PATCH</td><td>/produtos/{id}/preco</td><td>Altera o preço: <code>{"valor": 32.90}</code></td></tr>
+        <tr><td>PATCH</td><td>/produtos/{id}/disponibilidade</td><td>Liga ou desliga no cardápio: <code>{"disponivel": false}</code></td></tr>
+        <tr><td>DELETE</td><td>/produtos/{id}</td><td>Exclui um item</td></tr>
+        <tr><td>GET</td><td><a href="cardapio">/cardapio</a></td><td>Itens disponíveis, por categoria e nome</td></tr>
+        <tr><td>GET</td><td><a href="pedidos">/pedidos</a></td><td>Pedidos confirmados, do mais recente ao mais antigo</td></tr>
+        <tr><td>GET</td><td>/pedidos/{id}</td><td>Busca um pedido</td></tr>
+        <tr><td>POST</td><td>/pedidos</td><td>Confirma um pedido</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Exemplos</h2>
+  <p>Item do cardápio:</p>
+  <p><code>{"nome": "X-Bacon", "categoria": "Hambúrgueres", "descricao": "Pão brioche, cheddar e bacon", "valor": 32.90, "disponivel": true}</code></p>
+  <p>Pedido (quantidade de 1 a 99 por item; o total é calculado pelo servidor):</p>
+  <p><code>{"cliente": "Mesa 4", "observacao": "Sem cebola", "itens": [{"produtoId": 1, "quantidade": 2}]}</code></p>
+
+  <h2>Erros</h2>
+  <p>Respostas de erro trazem <code>{"message": "..."}</code>: 400 para dados inválidos, 404 para registro inexistente e 409 quando um item do pedido foi excluído, ficou indisponível ou mudou de preço.</p>
+</main>
+</body>
+</html>
