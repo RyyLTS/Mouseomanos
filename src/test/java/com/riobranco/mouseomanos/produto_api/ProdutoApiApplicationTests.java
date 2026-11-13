@@ -37,13 +37,21 @@ class ProdutoApiApplicationTests {
 	}
 
     @Test
-    void serveInterfaceEArquivosEstaticos() throws Exception {
-        var page = request("GET", "/", null);
-        assertEquals(200, page.statusCode());
-        assertTrue(page.body().contains("X-Squad · Hamburgueria"));
-        assertTrue(page.body().contains("id=\"product-form\""));
-        assertEquals(200, request("GET", "/app.js", null).statusCode());
-        assertEquals(200, request("GET", "/style.css", null).statusCode());
+    void liberaCorsParaOFrontEnd() throws Exception {
+        var preflight = client.send(HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/produtos/1/preco"))
+                .timeout(Duration.ofSeconds(10))
+                .header("Origin", "http://localhost:4200")
+                .header("Access-Control-Request-Method", "PATCH")
+                .method("OPTIONS", HttpRequest.BodyPublishers.noBody())
+                .build(), HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, preflight.statusCode());
+        assertEquals("http://localhost:4200", preflight.headers().firstValue("Access-Control-Allow-Origin").orElse(null));
+
+        var outraOrigem = client.send(HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/produtos"))
+                .timeout(Duration.ofSeconds(10))
+                .header("Origin", "http://exemplo.invalid")
+                .GET().build(), HttpResponse.BodyHandlers.ofString());
+        assertEquals(403, outraOrigem.statusCode());
     }
 
     @Test

@@ -19,11 +19,11 @@ As fotos da vitrine são ilustrativas e associadas aos tipos de hambúrguer. Nov
 
 Criados com o modo integrado da habilidade **ImageGen**, usando a ferramenta de geração de imagens; sem CLI ou chave de API. As saídas originais foram preservadas e cópias JPEG foram salvas no projeto para uso local, com qualidade 90 e sem recorte.
 
-- [hero-burger.jpg](../src/main/resources/static/assets/hero-burger.jpg): abertura e destaque de hambúrguer duplo.
-- [burger-bacon.jpg](../src/main/resources/static/assets/burger-bacon.jpg): destaque de bacon e seção da marca.
-- [burger-classic.jpg](../src/main/resources/static/assets/burger-classic.jpg): destaque do hambúrguer clássico.
+- [hero-burger.jpg](https://github.com/RaulR20/Mousseomanos-front/blob/main/public/assets/hero-burger.jpg): abertura e destaque de hambúrguer duplo.
+- [burger-bacon.jpg](https://github.com/RaulR20/Mousseomanos-front/blob/main/public/assets/burger-bacon.jpg): destaque de bacon e seção da marca.
+- [burger-classic.jpg](https://github.com/RaulR20/Mousseomanos-front/blob/main/public/assets/burger-classic.jpg): destaque do hambúrguer clássico.
 
-A fonte Barlow Condensed ExtraBold está em `src/main/resources/static/assets/fonts/`, acompanhada da licença SIL Open Font License. Foi obtida do [repositório oficial Google Fonts](https://github.com/google/fonts/tree/main/ofl/barlowcondensed). Fotos, fonte e estilos são servidos pela aplicação, sem depender de recursos externos ao abrir o site.
+A fonte Barlow Condensed ExtraBold está em `public/assets/fonts/` do repositório [Mousseomanos-front](https://github.com/RaulR20/Mousseomanos-front), acompanhada da licença SIL Open Font License. Foi obtida do [repositório oficial Google Fonts](https://github.com/google/fonts/tree/main/ofl/barlowcondensed). Fotos, fonte e estilos são servidos pelo próprio front-end, sem depender de recursos externos ao abrir o site.
 
 ## Prompts finais
 

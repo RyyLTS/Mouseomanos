@@ -1,17 +1,18 @@
 # X-Squad — Hamburgueria
 
 O app Android nativo Mousseomanos (Java + Views, MVVM, Aula 10) está em [`android/`](android/README.md).
-Abra essa pasta no Android Studio. O projeto Maven abaixo continua sendo a API e a interface web.
+Abra essa pasta no Android Studio. O projeto Maven abaixo é a API REST usada pelo app Android e pelo front-end web.
 
-Sistema da hamburgueria **X-Squad**, com cadastro de hambúrgueres, combos, acompanhamentos e bebidas, cardápio e pedidos. Usa Spring Boot 4.1.1, Java 17, Spring Data JPA e H2. A interface é servida pela própria aplicação; não precisa de Node.js, MySQL ou frontend separado para executar.
+Sistema da hamburgueria **X-Squad**, com cadastro de hambúrgueres, combos, acompanhamentos e bebidas, cardápio e pedidos. Usa Spring Boot 4.1.1, Java 17, Spring Data JPA e H2. A interface web fica no repositório separado [Mousseomanos-front](https://github.com/RaulR20/Mousseomanos-front), em Angular, e consome esta API.
 
 O site tem tema escuro e vermelho, fotografias de hambúrgueres, vitrine com setas e miniaturas, filtros por categoria e carrinho em painel lateral. O cadastro está em **Gerenciar cardápio**, junto à busca e no rodapé. Veja [design, arquivos de imagem e prompts](docs/design-e-imagens.md).
 
 ## Executar no Windows
 
 1. Abra `iniciar.cmd` com dois cliques, ou execute `./iniciar.cmd` no terminal desta pasta.
-2. Aguarde a compilação e os testes. O navegador abre em http://127.0.0.1:8080.
-3. Execute `parar.cmd` para encerrar o servidor em segundo plano.
+2. Aguarde a compilação e os testes. A API fica disponível em http://127.0.0.1:8080.
+3. Inicie o front-end seguindo o README do [Mousseomanos-front](https://github.com/RaulR20/Mousseomanos-front) (`npm install` e `npm start`) e abra http://localhost:4200.
+4. Execute `parar.cmd` para encerrar o servidor em segundo plano.
 
 O iniciador procura um JDK 17 ou superior e configura o Java apenas no processo atual. Neste computador, usa `C:\Program Files\Java\jdk-17`. O Maven e as dependências ficam em `.maven-cache/`. A primeira execução precisa de internet para baixá-los.
 
@@ -34,7 +35,7 @@ O detalhamento das tarefas do Sprint Backlog, do modelo do banco e da demonstra�
 | ID03 | Itens excluídos não aparecem; novos itens aparecem no cardápio | Cadastre ou exclua em **Gerenciar cardápio**. Também é possível indisponibilizar um item sem excluir seu cadastro. |
 | ID04 | Pedir apenas itens disponíveis e validar a criação dos pedidos | Adicione itens no **Cardápio**, ajuste as quantidades, preencha nome ou mesa e confirme. O sistema mostra o número e o total; consulte os detalhes em **Pedidos**. |
 
-As alterações aparecem imediatamente nesta interface e são buscadas automaticamente a cada 10 segundos nas demais abas visíveis. Também há botões para atualizar manualmente. Itens indisponíveis ou excluídos saem do carrinho. Se um preço mudar, o cliente deve revisar o novo total antes de confirmar.
+As alterações aparecem imediatamente na interface e são buscadas automaticamente a cada 10 segundos nas demais abas visíveis. Também há botões para atualizar manualmente. Itens indisponíveis ou excluídos saem do carrinho. Se um preço mudar, o cliente deve revisar o novo total antes de confirmar.
 
 O servidor verifica disponibilidade, quantidades e preços novamente no momento da confirmação. Um pedido com qualquer item inválido é recusado por inteiro. Os totais usam valores decimais exatos e são calculados no servidor. Cada pedido preserva o nome e o preço cobrados, mesmo após alterações ou exclusões no cardápio.
 
@@ -74,8 +75,12 @@ Criação de pedido (retorna HTTP 201 com número, data, itens e total):
 
 O preço enviado no pedido serve para detectar mudanças desde a visualização do carrinho; o preço cobrado sempre vem do banco. Quantidades devem ser inteiras, de 1 a 99 por item, sem IDs repetidos. O campo `precoUnitario` pode ser omitido por integrações que desejem aceitar o preço atual do servidor.
 
+## Front-end e CORS
+
+A API aceita chamadas do navegador apenas das origens listadas em `app.cors.allowed-origins` (`application.properties`). O padrão é `http://localhost:4200,http://127.0.0.1:4200`, usado pelo `ng serve`. Ao publicar o front-end em outro endereço, defina a variável de ambiente `CORS_ALLOWED_ORIGINS` com as origens separadas por vírgula.
+
 Respostas de erro incluem `message`: HTTP 400 para dados inválidos, 404 para consultas a registros inexistentes e 409 quando um item do pedido foi excluído, ficou indisponível ou teve o preço alterado.
 
 ## Verificação
 
-Os testes HTTP cobrem as quatro histórias, o CRUD existente, a interface estática, a disponibilidade, os cálculos monetários, a preservação do histórico, as alterações de preço durante a compra e a rejeição de pedidos vazios, itens duplicados, quantidades fracionárias e preços inválidos.
+Os testes HTTP cobrem as quatro histórias, o CRUD existente, a liberação de CORS para o front-end, a disponibilidade, os cálculos monetários, a preservação do histórico, as alterações de preço durante a compra e a rejeição de pedidos vazios, itens duplicados, quantidades fracionárias e preços inválidos.
