@@ -37,6 +37,14 @@ class ProdutoApiApplicationTests {
 	}
 
     @Test
+    void raizMostraResumoDaApi() throws Exception {
+        var page = request("GET", "/", null);
+        assertEquals(200, page.statusCode());
+        assertTrue(page.body().contains("API X-Squad"));
+        assertTrue(page.body().contains("/cardapio"));
+    }
+
+    @Test
     void liberaCorsParaOFrontEnd() throws Exception {
         var preflight = client.send(HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/produtos/1/preco"))
                 .timeout(Duration.ofSeconds(10))
