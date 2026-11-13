@@ -1,7 +1,6 @@
 param(
     [ValidateRange(1, 65535)][int]$Porta = 8080,
-    [switch]$SomenteCompilar,
-    [switch]$NaoAbrirNavegador
+    [switch]$SomenteCompilar
 )
 
 $ErrorActionPreference = 'Stop'
@@ -65,9 +64,8 @@ try {
         try {
             $response = Invoke-WebRequest -Uri "$url/produtos" -UseBasicParsing -TimeoutSec 2
             if ($response.StatusCode -eq 200) {
-                Write-Host "X-Squad rodando em $url (PID $($server.Id))."
+                Write-Host "API X-Squad rodando em $url (PID $($server.Id)). Inicie o front-end Angular (Mousseomanos-front) para usar a interface."
                 Write-Host 'Para encerrar, execute parar.cmd. O cardapio e os pedidos ficam salvos na pasta data.'
-                if (!$NaoAbrirNavegador) { Start-Process $url }
                 exit 0
             }
         } catch { }
